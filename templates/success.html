@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto my-5 text-center  p-4">
+        <div class="card" style="width: 18rem;">
+             <div class="card-body">
+                 <h5 class="card-title">Order Confirmed</h5>
+                 <a href="{% url 'home' %}" class="card-link">Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

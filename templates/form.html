@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="card mx-5 col-xl-8 col-lg-8 col-md-8 col-sm-10 mx-auto  form p-4">
+        <div class="card-head">
+            <h2 class="text-center">Store Form</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" id="form"  >
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-control" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="dob" class="form-label">DOB</label>
+                    <input type="date" id="dob" class="form-control" name="dob">
+                </div>
+                <div class="form-group">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="text" id="age" class="form-control" name="age">
+                </div>
+                <div class="form-group">
+                    <label for="gender" class="form-label">Gender</label>
+                    <input type="text" id="gender" class="form-control" name="gender">
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="text" id="phone" class="form-control" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="mail" class="form-label">Mail Id</label>
+                    <input type="text" id="mail" class="form-control" name="mail">
+                </div>
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" cols="30" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="department" class="form-label">Department</label>
+                    <select class="form-select" id="department" aria-label="Default select example" name="department">
+                        <option selected>-----Select----</option>
+                        {% for d in departments %}
+                        <option value="{{ d.id }}">{{ d.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course" class="form-label">Course</label>
+                    <select class="form-select" id="course" aria-label="Default select example" name="course">
+                        <option selected>-----Select----</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="purpose" class="form-label">Purpose</label>
+                    <select class="form-select" id="purpose" aria-label="Default select example" name="purpose">
+                        <option selected>-----Select----</option>
+                        <option value="Enquiry">Enquiry</option>
+                        <option value="Place Order">Place Order</option>
+                        <option value="Return">Return</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Materials Provide</label>
+                    <div class="form-group">
+                        <input type="checkbox" name="checks[]" value="debit note book">
+                        <label> Debit NoteBook</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="checks[]" value="pen">
+                        <label>Pen</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="checks[]" value="Exam Paper">
+                        <label> Exam Paper</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                </div>
+
+            </form>
+            <div class="form-group">
+
+                </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script>
+    $("#department").change(function () {
+        const departmentId = $(this).val();  // get the selected subject ID from the HTML dropdown list
+        $.ajax({                       // initialize an AJAX request
+            type: "POST",
+            url: '{% url "get_course_ajax" %}',
+            data: {
+                'department_id': departmentId,       // add the country id to the POST parameters
+                'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (data) {   // `data` is from `get_topics_ajax` view function
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (data) {
+                    html_data += `<option value="${data.id}">${data.name}</option>`
+                });
+                $("#course").html(html_data); // replace the contents of the topic input with the data that came from the server
+            }
+        });
+    });
+</script>
+{% endblock %}

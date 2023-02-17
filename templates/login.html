@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}
+    Login
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="card align-item-center mx-5" >
+            <div class="card-body">
+                <h2 class="card-title text-align-center">Login</h2>
+                <form  method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="User Name" name="user_name" class="form-control" required><br>
+                    <input type="password" placeholder="Password" name="password" class="form-control" required><br>
+                    <div class="submit" >
+                        <input type="submit" value="Sign Me Up >" class="btn btn-primary">
+                    </div>
+                    <br>
+
+                </form>
+                <a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
+                {% for msg in messages %}
+                <h3 style="color=white;">{{ msg }}</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

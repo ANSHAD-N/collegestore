@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}
+    Register
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="card align-item-center" style="width: 30rem;">
+            <div class="card-body">
+                <h2 class="card-title text-align-center">Register</h2>
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="User Name" name="user_name" class="form-control" required><br>
+                    <input type="password" placeholder="Password" name="password" class="form-control" required><br>
+					<input type="password" placeholder=" Confirm Password" name="c_password" class="form-control" required><br>
+                    <div class="submit" >
+                        <input type="submit" value="Sign Me Up >" class="btn btn-primary">
+                    </div>
+
+                </form>
+                {% for msg in messages %}
+                <h3 style="color=white;">{{ msg }}</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+			    	<div class="card">
+
+						<div class="card-head">
+						  <div class="card-title">
+							  <H2>Registration</H2>
+						  </div>
+						  	<form action="{% url 'register' %}" method="post">
+								{% 	csrf_token %}
+						  		<input type="text" placeholder="User Name" name="user_name">
+								<input type="password" placeholder="Password" name="password">
+								<input type="password" placeholder=" Confirm Password" name="c_password">
+
+
+								<div class="submit">
+									<input type="submit" value="Sign Me Up >">
+								</div>
+									<div class="clear">
+									</div>
+							</form>
+							  {% for msg in messages %}
+							  	<h3 style="color=white;">{{ msg }}</h3>
+							  {% endfor %}
+						</div>
+
+					</div>
+
+
